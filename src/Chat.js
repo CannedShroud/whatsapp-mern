@@ -10,7 +10,7 @@ import {
 import React from "react";
 import "./Chat.css";
 
-function Chat() {
+function Chat({ messages }) {
   return (
     <div className="chat">
       <div className="chat__header">
@@ -32,27 +32,17 @@ function Chat() {
         </div>
       </div>
       <div className="chat__body">
-        <div className="chat__message">
-          <p>
-            <span className="chat__name">CannedShroud</span>
-            This is a message
-            <span className="chat__timestamp">{new Date().toUTCString()}</span>
-          </p>
-        </div>
-        <div className="chat__message">
-          <p>
-            <span className="chat__name">CannedShroud</span>
-            This is a message
-            <span className="chat__timestamp">{new Date().toUTCString()}</span>
-          </p>
-        </div>
-        <div className="chat__message chat__reciever">
-          <p>
-            <span className="chat__name">CannedShroud</span>
-            This is a message
-            <span className="chat__timestamp">{new Date().toUTCString()}</span>
-          </p>
-        </div>
+        {messages.map((message) => (
+          <div
+            className={`chat__message ${!message.received && "chat__reciever"}`}
+          >
+            <p>
+              <span className="chat__name">{message.name}</span>
+              {message.message}
+              <span className="chat__timestamp">{message.timestamp}</span>
+            </p>
+          </div>
+        ))}
       </div>
       <div className="chat__footer">
         <InsertEmoticon />
@@ -60,7 +50,7 @@ function Chat() {
           <input type="text" placeholder="Type a message" />
           <div className="chat__sendIconDiv">
             <IconButton type="submit">
-              <Send className="chat__sendIcon"/>
+              <Send className="chat__sendIcon" />
             </IconButton>
           </div>
         </form>
